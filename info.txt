@@ -1,0 +1,33 @@
+#!/bin/bash
+
+display_os_info() {
+    echo "========================================"
+    echo "Information about OS"
+    echo "========================================"
+    if [ -f /etc/os-release ]; then
+        cat /etc/os-release
+    else
+        echo "File /etc/os-release not found. OS Version unknown."
+    fi
+    echo
+}
+
+display_bash_users() {
+    echo "========================================"
+    echo "Users:"
+    echo "========================================"
+    awk -F: '$NF == "/bin/bash" {print $1}' /etc/passwd
+    echo
+}
+
+display_open_ports() {
+    echo "========================================"
+    echo "Opened Ports (TCP та UDP):"
+    echo "========================================"
+    ss -tuln
+    echo
+}
+
+display_os_info
+display_bash_users
+display_open_ports
